@@ -1,0 +1,52 @@
+const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/posts`
+
+export const index = async () => {
+    try {
+        const response = await fetch(BASE_URL)
+        
+        const data = await response.json()
+        
+        if(data.err){
+            throw new Error(data.err)
+        }
+        
+        return data
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const show = async () => {
+
+}
+
+export const create = async (formData) => {
+    try {
+        const response = await fetch(BASE_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+            body: JSON.stringify(formData)
+        })
+
+        const data = await response.json()
+
+        if(data.err){
+            throw new Error(data.err)
+        }
+
+        return data
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const update = async () => {
+
+}
+
+export const deletePost = async () => {
+
+}
