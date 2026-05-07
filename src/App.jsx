@@ -10,6 +10,7 @@ import PostForm from './components/Posts/PostForm'
 import Landing from './components/Landing/Landing'
 import Dashboard from './components/Dashboard/Dashboard'
 import ExplorePage from './components/ExplorePage/ExplorePage'
+import PostDetails from './components/Posts/PostDetails'
 import * as postService from './services/postService'
 
 
@@ -20,15 +21,6 @@ const App = () => {
   
   const [posts, setPosts] = useState([])
   const [selectedPost, setSelectedPost] = useState(null)
-
-  useEffect(() => {
-    const fetchAllPosts = async () => {
-      const postsData = await postService.index()
-      setPosts(postsData)
-      console.log(posts);
-    }
-      if (user) fetchAllPosts()
-    }, [user])
 
   const handleAddPost = async (formData) => {
     try {
@@ -44,10 +36,16 @@ const App = () => {
   }
 
   const handleSelectedPost = async (post) => {
-    setSelectedPost(post)
+   setSelectedPost(post)
   }
 
-  
+  useEffect(() => {
+    const fetchAllPosts = async () => {
+      const postsData = await postService.index()
+      setPosts(postsData)
+    }
+    if (user) fetchAllPosts()
+  }, [user])
 
   return (
     <div>
@@ -57,6 +55,8 @@ const App = () => {
         {user ? (
           <>
             <Route path='/explore' element={<ExplorePage posts={posts} />} />
+            <Route path='/posts/:postId' element={<PostDetails />} />
+            <Route path='/posts/new' element={<PostForm selectedPost={selectedPost} handleAddPost={handleAddPost} />} />
           </>
         ):(
           <>
@@ -64,7 +64,7 @@ const App = () => {
           <Route path='/sign-in' element={<SignInForm />} />
           </>
         )}
-        <Route path='/posts/new' element={<PostForm selectedPost={selectedPost} handleAddPost={handleAddPost}/>} />
+        
       </Routes>
     </div>
   )
