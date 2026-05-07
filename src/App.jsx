@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useContext } from 'react'
+import { useEffect } from 'react'
 import { UserContext } from './contexts/UserContext'
 import { Routes, Route, useNavigate } from 'react-router'
 import Navbar from './components/Layout/Navbar/Navbar'
@@ -9,6 +10,7 @@ import PostForm from './components/Posts/PostForm'
 import Landing from './components/Landing/Landing'
 import Dashboard from './components/Layout/Dashboard/Dashboard'
 import ExplorePage from './components/Layout/ExplorePage/ExplorePage'
+import PostDetails from './components/Posts/PostDetails'
 import * as postService from './services/postService'
 
 
@@ -34,18 +36,35 @@ const App = () => {
   }
 
   const handleSelectedPost = async (post) => {
-    setSelectedPost(post)
+   setSelectedPost(post)
   }
+
+  useEffect(() => {
+    const fetchAllPosts = async () => {
+      const postsData = await postService.index()
+      setPosts(postsData)
+    }
+    if (user) fetchAllPosts()
+  }, [user])
 
   return (
     <div>
       <Navbar />
       <Routes>
         <Route path='/' element={ user ? <Dashboard /> : <Landing />} />
-        <Route path='/sign-up' element={<SignUpForm />} />
-        <Route path='/sign-in' element={<SignInForm />} />
-        <Route path='/posts/new' element={<PostForm selectedPost={selectedPost} handleAddPost={handleAddPost}/>} />
-        <Route path='/explore' element={<ExplorePage />} />
+        {user ? (
+          <>
+            <Route path='/explore' element={<ExplorePage posts={posts} />} />
+            <Route path='/posts/:postId' element={<PostDetails />} />
+            <Route path='/posts/new' element={<PostForm selectedPost={selectedPost} handleAddPost={handleAddPost} />} />
+          </>
+        ):(
+          <>
+          <Route path='/sign-up' element={<SignUpForm />} />
+          <Route path='/sign-in' element={<SignInForm />} />
+          </>
+        )}
+        
       </Routes>
     </div>
   )

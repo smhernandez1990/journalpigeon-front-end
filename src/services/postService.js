@@ -5,7 +5,7 @@ export const index = async () => {
         const response = await fetch(BASE_URL, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
+            },
         })
         
         const data = await response.json()
@@ -16,12 +16,27 @@ export const index = async () => {
         
         return data
     } catch (error) {
-        console.log(error);
+        console.log(error)
     }
 }
 
-export const show = async () => {
+export const show = async (postId) => {
+    try {
+        const response = await fetch(`${BASE_URL}/${postId}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
 
+        const data = await response.json()
+        if(data.err){
+            throw new Error(data.err)
+        }
+
+        return data
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 export const create = async (formData) => {

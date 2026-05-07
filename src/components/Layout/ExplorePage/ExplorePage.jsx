@@ -1,10 +1,16 @@
-import React from 'react'
+import { Link } from 'react-router'
 
-const ExplorePage = () => {
-  
+const ExplorePage = (props) => {
+
     return (
-    <div>This will show all the posts in order of newest to oldest</div>
-  )
+        <div>
+            {props.posts.map((post) => (
+                <Link key={post._id} to={`/posts/${post._id}`}>
+                    <h4><strong>{post.title}</strong></h4>
+                </Link>
+            ))}
+        </div>
+    )
 }
 
 export default ExplorePage
