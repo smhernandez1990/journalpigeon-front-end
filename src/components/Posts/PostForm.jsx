@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import * as postService from './services/postService'
 
 const initState = {
     title: '',
@@ -10,31 +9,20 @@ const initState = {
 
 const PostForm = (props) => {
 
-    const [posts, setPosts] = useState([])
-    const [selectedPost, setSelectedPost] = useState(null)
+   
     const [formData, setFormData] = useState(props.selectedPost ? props.selectedPost : initState)
 
     const handleChange = (e) => {
-        setFormData((prev) => prev + [e.target.name]: e.target.value)
+        setFormData({ ...formData, [e.target.name]: e.target.value})
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        props.handleAddNewPost(formData)
+        props.handleAddPost(formData)
         setFormData(initState)
     }
-  
-    const handleAddPost = async (formData) => {
-        try {
-            const newPost = await postService.create(formData)
-            if(newPost.err){
-                throw new Error(newPost.err)
-            }
-            setPosts((prev) => prev + newPost)
-        } catch (error) {
-            
-        }
-    }
+   
+
     return (
     <div>
         <form onSubmit={handleSubmit}>
@@ -57,7 +45,7 @@ const PostForm = (props) => {
             <input
                 id='body'
                 name='body'
-                value={formData.title}
+                value={formData.body}
                 onChange={handleChange}
                 required
             />
@@ -68,6 +56,7 @@ const PostForm = (props) => {
                 value={formData.tags}
                 onChange={handleChange}
             />
+            <button type='submit'>{props.selectedPost ? 'Update Post' : 'Create Post'}</button>
         </form>
     </div>
   )

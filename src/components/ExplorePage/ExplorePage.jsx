@@ -3,7 +3,7 @@ import React from 'react'
 const ExplorePage = () => {
   
     return (
-    <div>ExplorePage</div>
+    <div>This will show all the posts in order of newest to oldest</div>
   )
 }
 

@@ -2,7 +2,11 @@ const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/posts`
 
 export const index = async () => {
     try {
-        const response = await fetch(BASE_URL)
+        const response = await fetch(BASE_URL, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
         
         const data = await response.json()
         
@@ -25,8 +29,9 @@ export const create = async (formData) => {
         const response = await fetch(BASE_URL, {
             method: 'POST',
             headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
                 'Content-Type': 'application/json'
-            }
+            },
             body: JSON.stringify(formData)
         })
 
