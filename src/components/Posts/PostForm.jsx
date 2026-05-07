@@ -13,7 +13,7 @@ const PostForm = (props) => {
     const [formData, setFormData] = useState(props.selectedPost ? props.selectedPost : initState)
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value})
+       setFormData({ ...formData, [e.target.name]: e.target.value})
     }
 
     const handleSubmit = (e) => {
