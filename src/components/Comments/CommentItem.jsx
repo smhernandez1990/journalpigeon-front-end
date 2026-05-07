@@ -19,7 +19,6 @@ const CommentItem = ({ comment, postId, user, setComments, postOwnerId }) => {
     }
   };
 
-  
   const handleDelete = async () => {
     try {
       await deleteComment(postId, comment._id);

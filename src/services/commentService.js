@@ -13,7 +13,6 @@ export const createComment = async (postId, commentData) => {
   return response.json();
 };
 
-
 export const updateComment = async (postId, commentId, commentData) => {
   const response = await fetch(`${BASE_URL}/${postId}/comments/${commentId}`, {
     method: "PUT",

@@ -19,5 +19,4 @@ const CommentList = ({ comments, postId, user, setComments, postOwnerId }) => {
   );
 };
 
-
 export default CommentList;
