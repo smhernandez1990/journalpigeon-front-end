@@ -5,7 +5,7 @@ export const index = async () => {
         const response = await fetch(BASE_URL, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
+            },
         })
         
         const data = await response.json()
