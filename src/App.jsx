@@ -11,6 +11,7 @@ import Landing from './components/Landing/Landing'
 import Dashboard from './components/Layout/Dashboard/Dashboard'
 import ExplorePage from './components/Layout/ExplorePage/ExplorePage'
 import PostDetails from './components/Posts/PostDetails'
+import PostList from './components/Posts/PostList'
 import * as postService from './services/postService'
 
 
@@ -20,7 +21,6 @@ const App = () => {
   const navigate = useNavigate()
   
   const [posts, setPosts] = useState([])
-  const [selectedPost, setSelectedPost] = useState(null)
 
   const handleAddPost = async (formData) => {
     try {
@@ -35,8 +35,16 @@ const App = () => {
     }
   }
 
-  const handleSelectedPost = async (post) => {
-   setSelectedPost(post)
+  const handleUpdatePost = async (postId, postFormData) => {
+    const updatedPost = await postService.update(postId, postFormData)
+    setPosts(posts.map((p) => (postId === p._id ? updatedPost : p)))
+    navigate(`/posts/${postId}`)
+  }
+
+  const handleDeletePost = async (postId) => {
+    const deletedPost = await postService.deletePost(postId)
+    setPosts(posts.filter((p) => p._id === deletedPost._id))
+    navigate('/posts')
   }
 
   useEffect(() => {
@@ -55,8 +63,10 @@ const App = () => {
         {user ? (
           <>
             <Route path='/explore' element={<ExplorePage posts={posts} />} />
-            <Route path='/posts/:postId' element={<PostDetails />} />
-            <Route path='/posts/new' element={<PostForm selectedPost={selectedPost} handleAddPost={handleAddPost} />} />
+            <Route path='/posts/:postId' element={<PostDetails handleDeletePost={handleDeletePost} />} />
+            <Route path='/posts/new' element={<PostForm handleAddPost={handleAddPost} />} />
+            <Route path='/posts/:postId/edit' element={<PostForm  handleUpdatePost={handleUpdatePost} />} />
+            <Route path='/post' element={<PostList />} />
           </>
         ):(
           <>
