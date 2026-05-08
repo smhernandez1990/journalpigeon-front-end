@@ -1,16 +1,28 @@
-import { useState } from 'react'
-
-const initState = {
-    title: '',
-    mood: '',
-    body: '',
-    tags: []
-}
+import { useState, useEffect } from 'react'
+import { useParams } from 'react-router'
+import * as postService from '../../services/postService'
 
 const PostForm = (props) => {
 
+    const { postId } = useParams()
+
+    const initState = {
+        title: '',
+        mood: '',
+        body: '',
+        tags: []
+    }
    
     const [formData, setFormData] = useState(props.selectedPost ? props.selectedPost : initState)
+
+    useEffect(() => {
+        const fetchPost = async () => {
+            const postData = await postService.show(postId)
+            setFormData(postData)
+        }
+        if(postId) fetchPost()
+        return () => setFormData(initState)
+    }, [postId])
 
     const handleChange = (e) => {
        setFormData({ ...formData, [e.target.name]: e.target.value})
@@ -18,13 +30,14 @@ const PostForm = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        props.handleAddPost(formData)
+        postId ? props.handleUpdatePost(postId, formData) : props.handleAddPost(formData)
         setFormData(initState)
     }
    
 
     return (
     <div>
+        <h1>{postId ? 'Edit Post' : 'New Post'}</h1>
         <form onSubmit={handleSubmit}>
             <label htmlFor="title">Title </label>
             <input
@@ -56,7 +69,7 @@ const PostForm = (props) => {
                 value={formData.tags}
                 onChange={handleChange}
             />
-            <button type='submit'>{props.selectedPost ? 'Update Post' : 'Create Post'}</button>
+            <button type='submit'>{postId ? 'Update Post' : 'Create Post'}</button>
         </form>
     </div>
   )

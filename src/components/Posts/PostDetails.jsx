@@ -1,10 +1,14 @@
 import { useParams } from 'react-router'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import * as postService from '../../services/postService'
+//import CommentForm from '../Comments/CommentForm'
+import { UserContext } from '../../contexts/UserContext'
 
-const PostDetails = () => {
+const PostDetails = (props) => {
   
     const { postId } = useParams()
+
+    const { user } = useContext(UserContext)
 
     const [post, setPost] = useState(null)
 
@@ -35,8 +39,13 @@ const PostDetails = () => {
                             <p>
                                 {`${c.body}`}
                             </p>
+                            {post.author._id === user._id && (
+                                <>
+                                    <button onClick={() => props.handleDeletePost(postId)}>Delete Post</button>
+                                </>
+                            )}
                         </header>
-                        <p>{`${c.author?.username} ${new Date(c.createdAt).toLocaleDateString()}`}</p>
+                        <p>{`${c.author.username} ${new Date(c.createdAt).toLocaleDateString()}`}</p>
                     </article>
                 ))}
             </section>
