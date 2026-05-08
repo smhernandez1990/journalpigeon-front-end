@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { deleteComment, updateComment } from "../services/commentService";
+import { deleteComment, updateComment } from "../../services/commentService";
 
 const CommentItem = ({ comment, postId, user, setComments, postOwnerId }) => {
   const [isEditing, setIsEditing] = useState(false);

@@ -1,21 +1,26 @@
-import { useState } from "react";
-import { createComment } from "../services/commentService";
+import { useContext, useState } from "react";
+import { useParams } from 'react-router'
+import * as commentService from "../../services/commentService";
+import { UserContext } from "../../contexts/UserContext";
 
-const CommentForm = ({ postId, setComments }) => {
+const CommentForm = () => {
 
-  const [formData, setFormData] = useState({ body: "" });
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const newComment = await createComment(postId, formData);
-
-      setComments((prev) => [newComment, ...prev]);
-      setFormData({ body: "" });
-    } catch (err) {
-      console.log("Error creating comment:", err);
-    }
+  const { postId } = useParams()
+  const { user } = useContext(UserContext)
+  const [comment, setComment] = useState(null)
+  const [commentFormData, setCommentFormData] = useState({ body: "" });
+  
+  const handleAddComment = async (commentFormData) => {
+      const newComment = await commentService.createComment(postId, commentFormData);
+      setComment((prev) => prev, newComment);
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if(!user) throw new Error('You Must Be Signed In To Comment')
+    handleAddComment()
+    setCommentFormData({ body: '' })
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -23,8 +28,8 @@ const CommentForm = ({ postId, setComments }) => {
       <textarea
         name="body" 
         id="comment"
-        value={formData.body}
-        onChange={(e) => setFormData({ body: e.target.value })}
+        value={commentFormData.body}
+        onChange={(e) => setCommentFormData({ body: e.target.value })}
         required
       />
       <button type="submit">Submit Comment</button>
