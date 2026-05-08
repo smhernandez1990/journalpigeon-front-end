@@ -1,7 +1,7 @@
 import { useParams } from 'react-router'
 import { useState, useEffect, useContext } from 'react'
 import * as postService from '../../services/postService'
-//import CommentForm from '../Comments/CommentForm'
+import CommentForm from '../Comments/CommentForm'
 import { UserContext } from '../../contexts/UserContext'
 
 const PostDetails = (props) => {
@@ -11,6 +11,11 @@ const PostDetails = (props) => {
     const { user } = useContext(UserContext)
 
     const [post, setPost] = useState(null)
+
+    // const handleAddComment = async (commentData) => {
+    //     const newComment = await postService.createComment(postId, commentData);
+    //     setPost({ ...post, comments: [...post.comments, newComment] });
+    // };
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -48,6 +53,7 @@ const PostDetails = (props) => {
                         <p>{`${c.author.username} ${new Date(c.createdAt).toLocaleDateString()}`}</p>
                     </article>
                 ))}
+                <CommentForm />
             </section>
       </main>
   )
