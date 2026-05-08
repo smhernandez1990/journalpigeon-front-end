@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
-import { UserContext } from '../../contexts/UserContext'
-import * as userService from '../../services/userService'
+import { UserContext } from '../../../contexts/UserContext'
+import * as userService from '../../../services/userService'
 
 const Dashboard = () => {
     const { user } = useContext(UserContext)
