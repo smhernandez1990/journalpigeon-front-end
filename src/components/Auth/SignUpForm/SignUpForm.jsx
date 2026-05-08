@@ -31,9 +31,7 @@ const SignUpForm = () => {
             const user = await signUp(formData)
             setUser(user)
         } catch (error) {
-            console.log(error);
-            setMessage(error.message)
-            throw new Error(error.message)
+            console.log(error)
         }
     }
 

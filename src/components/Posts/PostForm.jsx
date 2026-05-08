@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router'
+import { useParams, useNavigate } from 'react-router'
 import * as postService from '../../services/postService'
 
-const PostForm = (props) => {
+const PostForm = () => {
 
     const { postId } = useParams()
+    const navigate = useNavigate()
 
     const initState = {
         title: '',
@@ -12,13 +13,17 @@ const PostForm = (props) => {
         body: '',
         tags: []
     }
-   
-    const [formData, setFormData] = useState(props.selectedPost ? props.selectedPost : initState)
+
+    const [post, setPost] = useState(null)
+
+    const [posts, setPosts] = useState([])
+
+    const [formData, setFormData] = useState(post ? post : initState)
 
     useEffect(() => {
         const fetchPost = async () => {
             const postData = await postService.show(postId)
-            setFormData(postData)
+            setPost(postData)
         }
         if(postId) fetchPost()
         return () => setFormData(initState)
@@ -28,9 +33,28 @@ const PostForm = (props) => {
        setFormData({ ...formData, [e.target.name]: e.target.value})
     }
 
+    const handleAddPost = async (formData) => {
+        try {
+            const newPost = await postService.create(formData)
+            if (newPost.err) {
+                throw new Error(newPost.err)
+            }
+            setPosts((prev) => prev + newPost)
+            navigate('/explore')
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const handleUpdatePost = async (postId, postFormData) => {
+        const updatedPost = await postService.update(postId, postFormData)
+        setPosts(posts.map((p) => (postId === p._id ? updatedPost : p)))
+        navigate(`/posts/${postId}`)
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
-        postId ? props.handleUpdatePost(postId, formData) : props.handleAddPost(formData)
+        postId ? handleUpdatePost(postId, formData) : handleAddPost(formData)
         setFormData(initState)
     }
    

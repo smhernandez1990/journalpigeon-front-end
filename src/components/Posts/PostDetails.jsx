@@ -1,10 +1,10 @@
-import { useParams } from 'react-router'
+import { useParams, useNavigate } from 'react-router'
 import { useState, useEffect, useContext } from 'react'
 import * as postService from '../../services/postService'
 import CommentForm from '../Comments/CommentForm'
 import { UserContext } from '../../contexts/UserContext'
 
-const PostDetails = (props) => {
+const PostDetails = () => {
   
     const { postId } = useParams()
 
@@ -12,10 +12,15 @@ const PostDetails = (props) => {
 
     const [post, setPost] = useState(null)
 
-    // const handleAddComment = async (commentData) => {
-    //     const newComment = await postService.createComment(postId, commentData);
-    //     setPost({ ...post, comments: [...post.comments, newComment] });
-    // };
+    const [posts, setPosts] = useState([])
+
+    const navigate = useNavigate()
+
+    const handleDeletePost = async (postId) => {
+        const deletedPost = await postService.deletePost(postId)
+        setPosts(posts.filter((p) => p._id === deletedPost._id))
+        navigate(`/posts/${user._id}`)
+    }
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -46,7 +51,7 @@ const PostDetails = (props) => {
                             </p>
                             {post.author._id === user._id && (
                                 <>
-                                    <button onClick={() => props.handleDeletePost(postId)}>Delete Post</button>
+                                    <button onClick={() => handleDeletePost(postId)}>Delete Post</button>
                                 </>
                             )}
                         </header>

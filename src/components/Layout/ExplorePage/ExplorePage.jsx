@@ -1,18 +1,34 @@
 import { Link } from 'react-router'
+import { useState, useEffect, useContext } from 'react'
+import * as postService from '../../../services/postService'
+import { UserContext } from '../../../contexts/UserContext'
 
-const ExplorePage = (props) => {
+const ExplorePage = () => {
 
+    const { user } = useContext(UserContext)
+
+    const [posts, setPosts] = useState([])
+
+    useEffect(() => {
+        const fetchAllPosts = async () => {
+            const postsData = await postService.index()
+            setPosts(postsData)
+        }
+        if (user) fetchAllPosts()
+    }, [user])
+
+    if (!posts) return <main>Loading...</main>
     return (
         <>
-            {props.posts.map((post) => (
-                <article>
-                <p>
-                <Link key={post._id} to={`/posts/${post._id}`}>
-                    <strong>{post.title}</strong>
-                </Link>
-                {' '} by {' '}
-                <Link to={`/${post.author._id}`}>{post.author.username}</Link>
-                </p>
+            {posts.map((p) => (
+                <article key={p._id}>
+                    <p>
+                        <Link to={`/posts/${p._id}`}>
+                            <strong>{p.title}</strong>
+                        </Link>
+                        {' '} by {' '}
+                        <Link to={`/${p.author._id}`}>{p.author.username}</Link>
+                    </p>
                 </article>
             ))}
         </>
