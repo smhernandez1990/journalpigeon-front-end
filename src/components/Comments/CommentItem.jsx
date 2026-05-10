@@ -34,7 +34,6 @@ const CommentItem = ({ comment, postId, user, setComments, postOwnerId }) => {
         <strong>{comment.author?.username}</strong> on{" "}
         {new Date(comment.createdAt).toLocaleDateString()}
       </header>
-
       {isEditing ? (
         <div>
           <textarea
