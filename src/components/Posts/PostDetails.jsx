@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from 'react-router'
+import { useParams, useNavigate, Link } from 'react-router'
 import { useState, useEffect, useContext } from 'react'
 import * as postService from '../../services/postService'
 import CommentForm from '../Comments/CommentForm'
@@ -40,6 +40,14 @@ const PostDetails = () => {
                 </header>
                 <p>{post.body}</p>
             </section>
+            {post.author._id === user._id && (
+                <>
+                    <Link to={`/posts/${postId}/edit`}>
+                        <button>Edit Post</button>
+                    </Link>
+                    <button onClick={() => handleDeletePost(postId)}>Delete Post</button>
+                </>
+            )}
             <section>
                 <h3>Comments</h3>
                 {!post.comments.length && <p>No Comments Yet!</p>}
@@ -49,11 +57,6 @@ const PostDetails = () => {
                             <p>
                                 {`${c.body}`}
                             </p>
-                            {post.author._id === user._id && (
-                                <>
-                                    <button onClick={() => handleDeletePost(postId)}>Delete Post</button>
-                                </>
-                            )}
                         </header>
                         <p>{`${c.author.username} ${new Date(c.createdAt).toLocaleDateString()}`}</p>
                     </article>
