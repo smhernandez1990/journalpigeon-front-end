@@ -27,7 +27,8 @@ const App = () => {
             <Route path='/posts/:postId' element={<PostDetails />} />
             <Route path='/posts/new' element={<PostForm />} />
             <Route path='/posts/:postId/edit' element={<PostForm />} />
-            <Route path='/posts/:userId' element={<PostList />} /> //post list will show all posts from specific user
+            <Route path='/:username' element={<PostList type='selectedUser' />} />
+            <Route path='/posts/tagged=:tag' element={<PostList type='tagged' />} />
           </>
         ):(
           <>

@@ -39,6 +39,18 @@ const PostDetails = () => {
                     <h2>{`${post.author.username} posted this on ${new Date(post.createdAt).toLocaleDateString()}`}</h2>
                 </header>
                 <p>{post.body}</p>
+                <>
+                <ul className='showPostTags'>
+                    Tagged:
+                    {post.tags.map((t) => {
+                        return (
+                        <li key={t}>
+                            <Link to={`/posts?${t}`}>{t}</Link>
+                        </li>
+                        )
+                    })}
+                </ul>
+                </>
             </section>
             {post.author._id === user._id && (
                 <>

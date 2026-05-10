@@ -18,6 +18,8 @@ const ExplorePage = () => {
     }, [user])
 
     if (!posts) return <main>Loading...</main>
+
+    
     return (
         <>
             {posts.map((p) => (
@@ -27,7 +29,7 @@ const ExplorePage = () => {
                             <strong>{p.title}</strong>
                         </Link>
                         {' '} by {' '}
-                        <Link to={`/${p.author._id}`}>{p.author.username}</Link>
+                        <Link to={`/${p.author.username}`}>{p.author.username}</Link>
                     </p>
                 </article>
             ))}
