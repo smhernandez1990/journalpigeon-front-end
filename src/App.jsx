@@ -28,7 +28,7 @@ const App = () => {
             <Route path='/posts/new' element={<PostForm />} />
             <Route path='/posts/:postId/edit' element={<PostForm />} />
             <Route path='/:username' element={<PostList type='selectedUser' />} />
-            <Route path='/posts/tagged=:tag' element={<PostList type='tagged' />} />
+            <Route path='/posts/tagged/:tag' element={<PostList type='tagged' />} />
           </>
         ):(
           <>

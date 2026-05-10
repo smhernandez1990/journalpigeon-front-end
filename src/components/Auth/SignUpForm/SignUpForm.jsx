@@ -25,8 +25,7 @@ const SignUpForm = () => {
     }
 
     const handleSubmit = async (e) => {
-        e.preventDefault()// stops browser from refreshing on form submit
-        console.log(formData);
+        e.preventDefault()
         try {
             const user = await signUp(formData)
             setUser(user)

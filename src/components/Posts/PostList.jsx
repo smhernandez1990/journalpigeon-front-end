@@ -22,27 +22,32 @@ const PostList = ({ type }) => {
 
   const filteredPosts = type === 'selectedUser'
     ? allPosts.filter(p => p.author.username === username)
-    : allPosts.filter(p => p.tags.includes(tag))
+    : allPosts.filter(p => p.tags.some((tg) => tg === tag))
 
   return (
-    <>
-      <h1>Posts By {type === 'selectedUser' ? username : tag}</h1>
+    <main>
+      {type === 'selectedUser'
+      ? <h1>{username}'s Posts</h1>
+      : <h1>Posts Tagged '{tag}'</h1>
+      }
+
       {filteredPosts.map((p) => (
         <article key={p._id}>
           <p>
-            <Link to={(`/posts/${p._id}`)}>
+            <Link to={`/posts/${p._id}`}>
               <strong>{p.title}</strong>
             </Link>
-          </p>
-          {type === 'tag' 
-          && (
-            <p>by 
-              <Link to={`/${p.author._id}`}>{p.author.username}</Link>
+            {type !== 'selectedUser' && (
+              <>
+                {' '}by{' '}
+                <Link to={`/${p.author.username}`}>{p.author.username}</Link>
+              </>
+            )}
             </p>
-          )}
-        </article>
-      ))}
-    </>
+         </article>
+       ))}
+       {!filteredPosts.length && <p>No Posts Yet!</p>}
+    </main>
   )
 }
 

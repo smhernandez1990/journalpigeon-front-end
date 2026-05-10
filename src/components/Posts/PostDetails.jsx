@@ -45,7 +45,7 @@ const PostDetails = () => {
                     {post.tags.map((t) => {
                         return (
                         <li key={t}>
-                            <Link to={`/posts?${t}`}>{t}</Link>
+                            <Link to={`/posts/tagged/${t}`}>{t}</Link>
                         </li>
                         )
                     })}
@@ -71,6 +71,17 @@ const PostDetails = () => {
                             </p>
                         </header>
                         <p>{`${c.author.username} ${new Date(c.createdAt).toLocaleDateString()}`}</p>
+                        {(c.author._id === user._id) && (
+                            <>
+                                <button>Edit Comment</button>//onClick will render the comment form using state
+                                <button>Delete Comment</button>
+                            </>
+                        )}
+                        {(post.user_id === user._id) && (
+                            <>
+                                <button>Delete Comment</button>
+                            </>
+                        )}
                     </article>
                 ))}
                 <CommentForm />
