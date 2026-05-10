@@ -18,3 +18,20 @@ export const index = async () => {
         
     }
 }
+
+export const show = async (userId) => {
+    try {
+        const response = await fetch(`${BASE_URL}/${userId}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+        const data = await response.json()
+        if(data.err){
+            throw new Error(data.err)
+        }
+        return data
+    } catch (error) {
+        console.log(error);
+    }
+}

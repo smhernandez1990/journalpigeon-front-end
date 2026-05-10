@@ -16,7 +16,13 @@ const Navbar = () => {
           <>
             <li>
               {user.username}
-              < Link to='/'>Dashboard</Link>
+              {' '}
+              <Link to='/'>Dashboard</Link>
+              {' '}
+              <Link to='/posts/new'>Add Post</Link>
+              {' '}
+              <Link to='/explore'>Explore</Link>
+              {' '}
               <Link to='/sign-in' onClick={handleLogOut}>Sign Out</Link>
             </li>
           </>
@@ -24,7 +30,9 @@ const Navbar = () => {
           <>
             <li>
               <Link to='/'>Home</Link>
+              {' '}
               <Link to='/sign-up'>Sign Up</Link>
+              {' '}
               <Link to='/sign-in'>Sign In</Link>
             </li>
           </>

@@ -1,10 +1,10 @@
-import { useParams } from 'react-router'
+import { useParams, useNavigate, Link } from 'react-router'
 import { useState, useEffect, useContext } from 'react'
 import * as postService from '../../services/postService'
 import CommentForm from '../Comments/CommentForm'
 import { UserContext } from '../../contexts/UserContext'
 
-const PostDetails = (props) => {
+const PostDetails = () => {
   
     const { postId } = useParams()
 
@@ -12,10 +12,15 @@ const PostDetails = (props) => {
 
     const [post, setPost] = useState(null)
 
-    // const handleAddComment = async (commentData) => {
-    //     const newComment = await postService.createComment(postId, commentData);
-    //     setPost({ ...post, comments: [...post.comments, newComment] });
-    // };
+    const [posts, setPosts] = useState([])
+
+    const navigate = useNavigate()
+
+    const handleDeletePost = async (postId) => {
+        const deletedPost = await postService.deletePost(postId)
+        setPosts(posts.filter((p) => p._id === deletedPost._id))
+        navigate(`/posts/${user._id}`)
+    }
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -34,7 +39,27 @@ const PostDetails = (props) => {
                     <h2>{`${post.author.username} posted this on ${new Date(post.createdAt).toLocaleDateString()}`}</h2>
                 </header>
                 <p>{post.body}</p>
+                <>
+                <ul className='showPostTags'>
+                    Tagged:
+                    {post.tags.map((t) => {
+                        return (
+                        <li key={t}>
+                            <Link to={`/posts?${t}`}>{t}</Link>
+                        </li>
+                        )
+                    })}
+                </ul>
+                </>
             </section>
+            {post.author._id === user._id && (
+                <>
+                    <Link to={`/posts/${postId}/edit`}>
+                        <button>Edit Post</button>
+                    </Link>
+                    <button onClick={() => handleDeletePost(postId)}>Delete Post</button>
+                </>
+            )}
             <section>
                 <h3>Comments</h3>
                 {!post.comments.length && <p>No Comments Yet!</p>}
@@ -44,11 +69,6 @@ const PostDetails = (props) => {
                             <p>
                                 {`${c.body}`}
                             </p>
-                            {post.author._id === user._id && (
-                                <>
-                                    <button onClick={() => props.handleDeletePost(postId)}>Delete Post</button>
-                                </>
-                            )}
                         </header>
                         <p>{`${c.author.username} ${new Date(c.createdAt).toLocaleDateString()}`}</p>
                     </article>

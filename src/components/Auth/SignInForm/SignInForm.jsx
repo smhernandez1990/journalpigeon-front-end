@@ -20,11 +20,9 @@ const SignInForm = () => {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Stops the browser from refreshing on form submit
-        console.log(formData);
+        e.preventDefault()
         try {
             const user = await signIn(formData)
-            console.log(user)
             setUser(user)
             navigate('/')
         } catch (error) {
