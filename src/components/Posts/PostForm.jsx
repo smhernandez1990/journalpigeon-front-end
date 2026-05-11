@@ -108,7 +108,7 @@ const PostForm = () => {
                     onChange={(e) => setTagVals(e.target.value)}
                     placeholder='Separate tags with commas'
                 />
-                <button type='submit'>{postId ? 'Update Post' : 'Create Post'}</button>
+                <button type='submit'>{postId ? 'Update Post!' : 'Post!'}</button>
             </form>
         </div>
     )
