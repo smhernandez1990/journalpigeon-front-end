@@ -1,16 +1,41 @@
-# React + Vite
+# JournalPigeon
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![JournalPigeon Explore Page]()
 
-Currently, two official plugins are available:
+JournalPigeon is a social journaling blog, where users can share their daily thoughts, track their moods, and connect with a "flock" of other users through tags and comments.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Background
 
-## React Compiler
+JournalPigeon is a modern "home loft" for our digital thoughts. We were inspired by the historical role of carrier pigeons as the world's most reliable messengers, this platform turns journaling into a social experience. Here you can share your daily "coos" (posts) and mood and share vital news with your flock or just checking in. You can also explore and add to your flock or join other flocks as well!
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+<!-- > Add a fun fact -->
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Planning Materials:
+[Trello board]()
+
+[Deployed Application]()
+
+## Attributions
+
+[]()
+[]()
+
+[Coolors for Color Scheme for Blog](https://coolors.co/)
+
+## Technologies Used
+
+
+* Node.js
+* Express
+* MongoDB
+* React(Vite)
+* React Router
+* Context API
+
+## Next Steps
+
+1.
+2.
+3.
