@@ -26,9 +26,8 @@ const SignInForm = () => {
             setUser(user)
             navigate('/')
         } catch (error) {
-            console.log(error)
             setMessage(error.message)
-            throw new Error(error.message)
+            throw new Error(error.message, { cause: error })
         }
     };
 

@@ -52,8 +52,8 @@ const CommentItem = ({ comment, postId, user, setComments, postOwnerId }) => {
             )}
             {(comment.author?._id === user?._id ||
               postOwnerId === user?._id) && (
-              <button onClick={handleDelete}>Delete</button>
-            )}
+                <button onClick={handleDelete}>Delete</button>
+              )}
           </div>
         </>
       )}

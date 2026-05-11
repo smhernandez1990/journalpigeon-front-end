@@ -21,18 +21,12 @@ const App = () => {
         <Route path="/" element={user ? <Dashboard /> : <Landing />} />
         {user ? (
           <>
-            <Route path="/explore" element={<ExplorePage />} />
-            <Route path="/posts/new" element={<PostForm />} />
-            <Route path="/posts/:postId" element={<PostDetails />} />
-            <Route path="/posts/:postId/edit" element={<PostForm />} />
-            <Route
-              path="/user/:username"
-              element={<PostList type="selectedUser" />}
-            />
-            <Route
-              path="/posts/tagged/:tag"
-              element={<PostList type="tag" />}
-            />
+            <Route path='/explore' element={<ExplorePage />} /> //explore shows all posts from all users from newest to oldest
+            <Route path='/posts/new' element={<PostForm />} />
+            <Route path='/posts/:postId' element={<PostDetails />} />
+            <Route path='/posts/:postId/edit' element={<PostForm />} />
+            <Route path='/:username' element={<PostList type='selectedUser' />} />
+            <Route path='/posts/tagged/:tag' element={<PostList type='tagged' />} />
           </>
         ) : (
           <>

@@ -11,49 +11,43 @@ const PostList = ({ type }) => {
 
   useEffect(() => {
     const fetchAllPosts = async () => {
-      try {
-        const postsData = await postService.index();
-        setAllPosts(postsData);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    if (user) fetchAllPosts();
-  }, [user]);
+      const postsData = await postService.index()
+      setAllPosts(postsData)
+    }
+    if (user) fetchAllPosts()
+  }, [user])
 
-  if (isLoading) return <main>Loading...</main>;
+  if (!allPosts) return <main>Loading...</main>
 
-  const filteredPosts =
-    type === "selectedUser"
-      ? allPosts.filter((p) => p.author?.username === username)
-      : allPosts.filter((p) => p.tags?.includes(tag));
+  const filteredPosts = type === 'selectedUser'
+    ? allPosts.filter(p => p.author.username === username)
+    : allPosts.filter(p => p.tags.some((tg) => tg === tag))
 
   return (
     <main>
-      <h1>Posts By {type === "selectedUser" ? username : tag}</h1>
-      {filteredPosts.length === 0 ? (
-        <p>No posts found.</p>
-      ) : (
-        filteredPosts.map((p) => (
-          <article key={p._id}>
-            <p>
-              <Link to={`/posts/${p._id}`}>
-                <strong>{p.title}</strong>
-              </Link>
-            </p>
-            {type === "tag" && (
-              <p>
-                by{" "}
-                <Link to={`/${p.author?.username}`}>{p.author?.username}</Link>
-              </p>
-            )}
-          </article>
-        ))
-      )}
-    </main>
-  );
-};
+      {type === 'selectedUser'
+      ? <h1>{username}'s Posts</h1>
+      : <h1>Posts Tagged '{tag}'</h1>
+      }
 
-export default PostList;
+      {filteredPosts.map((p) => (
+        <article key={p._id}>
+          <p>
+            <Link to={`/posts/${p._id}`}>
+              <strong>{p.title}</strong>
+            </Link>
+            {type !== 'selectedUser' && (
+              <>
+                {' '}by{' '}
+                <Link to={`/${p.author.username}`}>{p.author.username}</Link>
+              </>
+            )}
+            </p>
+         </article>
+       ))}
+       {!filteredPosts.length && <p>No Posts Yet!</p>}
+    </main>
+  )
+}
+
+export default PostList

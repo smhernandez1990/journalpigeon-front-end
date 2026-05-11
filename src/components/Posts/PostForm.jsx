@@ -104,4 +104,45 @@ const PostForm = () => {
   );
 };
 
-export default PostForm;
+    return (
+        <div>
+            <h1>{postId ? 'Edit Post' : 'New Post'}</h1>
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="title">Title </label>
+                <input
+                    id='title'
+                    name='title'
+                    value={formData.title}
+                    onChange={handleChange}
+                    required
+                />
+                <label htmlFor="mood">Mood </label>
+                <input
+                    id='mood'
+                    name='mood'
+                    value={formData.mood}
+                    onChange={handleChange}
+                />
+                <label htmlFor="body">Body </label>
+                <input
+                    id='body'
+                    name='body'
+                    value={formData.body}
+                    onChange={handleChange}
+                    required
+                />
+                <label htmlFor="tags">Tags </label>
+                <input
+                    id='tags'
+                    name='tags'
+                    value={tagVals}
+                    onChange={(e) => setTagVals(e.target.value)}
+                    placeholder='Separate tags with commas'
+                />
+                <button type='submit'>{postId ? 'Update Post!' : 'Post!'}</button>
+            </form>
+        </div>
+    )
+}
+
+export default PostForm
