@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link } from "react-router";
 import { useState, useEffect, useContext } from "react";
 import * as postService from "../../services/postService";
 import { UserContext } from "../../contexts/UserContext";
@@ -37,11 +37,6 @@ const PostList = ({ type }) => {
           ? `${username}'s Posts`
           : `Posts Tagged '${tag}'`}
       </h1>
-
-      <Link to="/explore">
-        <button>← Back to Explore</button>
-      </Link>
-
       <section>
         {filteredPosts.map((p) => (
           <article key={p._id}>

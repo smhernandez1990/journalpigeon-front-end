@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router";
 import * as postService from "../../services/postService";
 
 const initState = {
@@ -40,6 +40,7 @@ const PostForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const processedTags = tagVals
+      .replace(/[^a-zA-Z0-9 ,]/g, "")
       .split(",")
       .map((t) => t.trim())
       .filter((t) => t.length > 0);
@@ -51,8 +52,8 @@ const PostForm = () => {
         await postService.update(postId, postData);
         navigate(`/posts/${postId}`);
       } else {
-        await postService.create(postData);
-        navigate("/posts");
+        const newPost = await postService.create(postData);
+        navigate(`/posts/${newPost._id}`);
       }
     } catch (err) {
       console.error(err);
@@ -86,7 +87,7 @@ const PostForm = () => {
           onChange={handleChange}
           required
         />
-        <label htmlFor="tags">Tags (comma separated)</label>
+        <label htmlFor="tags">Tags</label>
         <input
           id="tags"
           name="tags"

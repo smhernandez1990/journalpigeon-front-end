@@ -5,9 +5,8 @@ export const signUp = async (formData) => {
         const response = await fetch(`${BASE_URL}/sign-up`, {
             method: 'POST',
             headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
                 'Content-Type': 'application/json'
-                //later we will need a token here for auth req
-                //'Authentication': Bearer <Token>
             },
             body: JSON.stringify(formData)
         })
@@ -34,9 +33,8 @@ export const signIn = async (formData) => {
         const response = await fetch(`${BASE_URL}/sign-in`, {
             method: 'POST',
             headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
                 'Content-Type': 'application/json'
-                //later we will need a token here for auth req
-                //'Authentication': Bearer <Token>
             },
             body: JSON.stringify(formData)
         })

@@ -13,19 +13,6 @@ export const createComment = async (postId, commentFormData) => {
   return response.json();
 };
 
-export const updateComment = async (postId, commentId, commentFormData) => {
-  const response = await fetch(`${BASE_URL}/${postId}/comments/${commentId}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-    body: JSON.stringify(commentFormData),
-  });
-  if (!response.ok) throw new Error("Failed to update comment");
-  return response.json();
-};
-
 export const deleteComment = async (postId, commentId) => {
   const response = await fetch(`${BASE_URL}/${postId}/comments/${commentId}`, {
     method: "DELETE",

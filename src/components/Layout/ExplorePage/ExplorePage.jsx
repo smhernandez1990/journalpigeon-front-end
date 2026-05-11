@@ -22,6 +22,7 @@ const ExplorePage = () => {
     
     return (
         <>
+        <h1>Flock Talk</h1>
             {posts.map((p) => (
                 <article key={p._id}>
                     <p>

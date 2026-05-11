@@ -1,15 +1,16 @@
 import { useContext } from "react";
 import { UserContext } from "./contexts/UserContext";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router";
 import Navbar from "./components/Layout/Navbar/Navbar";
 import SignUpForm from "./components/Auth/SignUpForm/SignUpForm";
 import SignInForm from "./components/Auth/SignInForm/SignInForm";
 import PostForm from "./components/Posts/PostForm";
-import Landing from "./components/Landing/Landing";
+import Landing from "./components/Layout/Landing/Landing";
 import Dashboard from "./components/Layout/Dashboard/Dashboard";
 import ExplorePage from "./components/Layout/ExplorePage/ExplorePage";
 import PostDetails from "./components/Posts/PostDetails";
 import PostList from "./components/Posts/PostList";
+import Footer from "./components/Layout/Footer/Footer";
 
 const App = () => {
   const { user } = useContext(UserContext);
@@ -21,7 +22,7 @@ const App = () => {
         <Route path="/" element={user ? <Dashboard /> : <Landing />} />
         {user ? (
           <>
-            <Route path='/explore' element={<ExplorePage />} /> //explore shows all posts from all users from newest to oldest
+            <Route path='/posts' element={<ExplorePage />} /> //explore shows all posts from all users from newest to oldest
             <Route path='/posts/new' element={<PostForm />} />
             <Route path='/posts/:postId' element={<PostDetails />} />
             <Route path='/posts/:postId/edit' element={<PostForm />} />
@@ -35,6 +36,7 @@ const App = () => {
           </>
         )}
       </Routes>
+      <Footer />
     </div>
   );
 };

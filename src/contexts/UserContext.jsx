@@ -8,7 +8,7 @@ const getUserFromToken = () => {
   try {
     const payload = token.split(".");
     return JSON.parse(atob(payload)).user;
-  } catch (error) {
+  } catch {
     return null;
   }
 };

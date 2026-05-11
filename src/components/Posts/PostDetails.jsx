@@ -26,7 +26,7 @@ const PostDetails = () => {
   const handleDeletePost = async (postId) => {
     try {
       await postService.deletePost(postId);
-      navigate("/posts");
+      navigate(`/${user.username}`);
     } catch (err) {
       console.error(err);
     }
@@ -34,7 +34,7 @@ const PostDetails = () => {
 
   const handleAddComment = async (commentFormData) => {
     try {
-      const newComment = await commentService.create(postId, commentFormData);
+      const newComment = await commentService.createComment(postId, commentFormData);
       setPost({
         ...post,
         comments: [...post.comments, newComment],
@@ -63,10 +63,10 @@ const PostDetails = () => {
       <section>
         <header>
           <h1>{post.title}</h1>
-          <p>
-            {post.author.username} posted on{" "}
+          <h3>
+            <Link to={`/${post.author.username}`}>{post.author.username}</Link> posted on{" "}
             {new Date(post.createdAt).toLocaleDateString()}
-          </p>
+          </h3>
         </header>
         <p>{post.body}</p>
         {post.tags.length > 0 && (

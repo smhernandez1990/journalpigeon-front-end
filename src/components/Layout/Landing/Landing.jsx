@@ -2,6 +2,7 @@ import { Link } from 'react-router'
 
 const Landing = () => {
     return (
+        <>
         <main>
             <img src='someimageurl' alt='screenshot of finished explore page' />
             <br />
@@ -24,6 +25,7 @@ const Landing = () => {
             <button>Sign In</button>
             </Link>
         </main>
+        </>
     );
 };
 

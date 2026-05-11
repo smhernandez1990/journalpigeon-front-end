@@ -21,7 +21,7 @@ const Navbar = () => {
               {' '}
               <Link to='/posts/new'>Add Post</Link>
               {' '}
-              <Link to='/explore'>Explore</Link>
+              <Link to='/posts'>Explore</Link>
               {' '}
               <Link to='/sign-in' onClick={handleLogOut}>Sign Out</Link>
             </li>
