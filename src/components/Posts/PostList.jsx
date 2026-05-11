@@ -1,14 +1,13 @@
-import { useParams, Link } from 'react-router'
-import { useState, useEffect, useContext } from 'react'
-import * as postService from '../../services/postService'
-import { UserContext } from '../../contexts/UserContext'
+import { useParams, Link } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import * as postService from "../../services/postService";
+import { UserContext } from "../../contexts/UserContext";
 
 const PostList = ({ type }) => {
-
-  const { user } = useContext(UserContext)
-  const { username, tag } = useParams()
-
-  const [allPosts, setAllPosts] = useState([])
+  const { user } = useContext(UserContext);
+  const { username, tag } = useParams();
+  const [allPosts, setAllPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchAllPosts = async () => {
