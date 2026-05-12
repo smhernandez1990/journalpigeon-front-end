@@ -6,8 +6,8 @@ const getUserFromToken = () => {
   const token = localStorage.getItem("token");
   if (!token) return null;
   try {
-    const payload = token.split(".")[1];
-    return JSON.parse(atob(payload)).user;
+    const payload = token.split(".");
+    return JSON.parse(atob(payload[1])).user;
   } catch (error) {
     return null;
   }

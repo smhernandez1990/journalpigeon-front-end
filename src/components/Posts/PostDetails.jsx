@@ -4,43 +4,35 @@ import * as postService from "../../services/postService";
 import * as commentService from "../../services/commentService";
 import CommentForm from "../Comments/CommentForm";
 import { UserContext } from "../../contexts/UserContext";
+import { errNotify } from "../ErrorNotification/ErrorNotification";
 
 const PostDetails = () => {
   const { postId } = useParams();
   const { user } = useContext(UserContext);
   const [post, setPost] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchPost = async () => {
-      try {
-        const postData = await postService.show(postId);
-        setPost(postData);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchPost();
-  }, [postId]);
+
 
   const handleDeletePost = async (postId) => {
     try {
       await postService.deletePost(postId);
-      navigate("/posts");
-    } catch (err) {
-      console.error(err);
+      navigate(`/${user.username}`);
+    } catch (error) {
+      errNotify()
     }
   };
 
   const handleAddComment = async (commentFormData) => {
     try {
-      const newComment = await commentService.create(postId, commentFormData);
+      const newComment = await commentService.createComment(postId, commentFormData);
       setPost({
         ...post,
         comments: [...post.comments, newComment],
       });
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      errNotify()
     }
   };
 
@@ -51,22 +43,36 @@ const PostDetails = () => {
         ...post,
         comments: post.comments.filter((c) => c._id !== commentId),
       });
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      errNotify()
     }
   };
 
-  if (!post) return <main>Loading...</main>;
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const postData = await postService.show(postId);
+        setPost(postData);
+      } catch (error) {
+        errNotify()
+      } finally {
+        setIsLoading(false)
+      }
+    };
+    fetchPost();
+  }, [postId]);
 
+  if (isLoading) return <main>Loading...</main>;
+  if (!post) navigate('/error')
   return (
     <main>
       <section>
         <header>
           <h1>{post.title}</h1>
-          <p>
-            {post.author?.username} posted on{" "}
+          <h3>
+            <Link to={`/${post.author.username}`}>{post.author.username}</Link> posted on{" "}
             {new Date(post.createdAt).toLocaleDateString()}
-          </p>
+          </h3>
         </header>
         <p>{post.body}</p>
         {post.tags?.length > 0 && (
@@ -102,10 +108,10 @@ const PostDetails = () => {
             {c.author?._id === user?._id && <button>Edit Comment</button>}
             {(c.author?._id === user?._id ||
               post.author?._id === user?._id) && (
-              <button onClick={() => handleDeleteComment(c._id)}>
-                Delete Comment
-              </button>
-            )}
+                <button onClick={() => handleDeleteComment(c._id)}>
+                  Delete Comment
+                </button>
+              )}
           </article>
         ))}
         <CommentForm handleAddComment={handleAddComment} />
