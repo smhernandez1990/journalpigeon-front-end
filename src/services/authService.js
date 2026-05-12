@@ -22,7 +22,7 @@ export const signUp = async (formData) => {
             return JSON.parse(atob(data.token.split('.')[1])).user
         }
     } catch (error) {
-        console.log(error);
+        throw new Error(error.message, { cause: error })
     }
 }
 
@@ -49,6 +49,6 @@ export const signIn = async (formData) => {
         }
 
     } catch (error) {
-        console.log(error);
+        throw new Error(error.message, { cause: error })
     }
 }

@@ -10,7 +10,7 @@ const ErrorPage = () => {
         <p>
           See what happens when you go off on your own? You know what they say, <em>'Birds of a Feather..'</em> and so on.
         </p>
-        <button onClick={() => navigate('/')}>Back to the Flock!</button>
+        <button onClick={() => navigate(-1)}>Back to the Flock!</button>
     </div>
   )
 }

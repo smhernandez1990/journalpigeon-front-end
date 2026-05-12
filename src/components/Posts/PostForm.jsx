@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import * as postService from "../../services/postService";
+import { errNotify } from "../ErrorNotification/ErrorNotification";
 
 const initState = {
   title: "",
@@ -26,8 +27,8 @@ const PostForm = () => {
           tags: postData.tags || [],
         });
         setTagVals(postData.tags ? postData.tags.join(", ") : "");
-      } catch (err) {
-        console.error(err);
+      } catch (error) {
+        errNotify()
       }
     };
     if (postId) fetchPost();
@@ -55,8 +56,8 @@ const PostForm = () => {
         const newPost = await postService.create(postData);
         navigate(`/posts/${newPost._id}`);
       }
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      errNotify()
     }
   };
 

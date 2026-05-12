@@ -4,31 +4,23 @@ import * as postService from "../../services/postService";
 import * as commentService from "../../services/commentService";
 import CommentForm from "../Comments/CommentForm";
 import { UserContext } from "../../contexts/UserContext";
+import { errNotify } from "../ErrorNotification/ErrorNotification";
 
 const PostDetails = () => {
   const { postId } = useParams();
   const { user } = useContext(UserContext);
   const [post, setPost] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchPost = async () => {
-      try {
-        const postData = await postService.show(postId);
-        setPost(postData);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchPost();
-  }, [postId]);
+
 
   const handleDeletePost = async (postId) => {
     try {
       await postService.deletePost(postId);
       navigate(`/${user.username}`);
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      errNotify()
     }
   };
 
@@ -39,8 +31,8 @@ const PostDetails = () => {
         ...post,
         comments: [...post.comments, newComment],
       });
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      errNotify()
     }
   };
 
@@ -51,13 +43,27 @@ const PostDetails = () => {
         ...post,
         comments: post.comments.filter((c) => c._id !== commentId),
       });
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      errNotify()
     }
   };
 
-  if (!post) return <main>Loading...</main>;
-  if (!post._id) return <main>Post Not Found</main>;
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const postData = await postService.show(postId);
+        setPost(postData);
+      } catch (error) {
+        errNotify()
+      } finally {
+        setIsLoading(false)
+      }
+    };
+    fetchPost();
+  }, [postId]);
+
+  if (isLoading) return <main>Loading...</main>;
+  if (!post) navigate('/error')
   return (
     <main>
       <section>
