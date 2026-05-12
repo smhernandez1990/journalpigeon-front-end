@@ -6,47 +6,9 @@ const Navbar = () => {
   const { user, setUser } = useContext(UserContext);
 
   const handleLogOut = () => {
-<<<<<<< HEAD
-    localStorage.removeItem('token')
-    setUser(null)
-  }
-  return (
-    <nav>
-      <ul>
-        {user ? (
-          <>
-            <li>
-              {user.username}
-              {' '}
-              <Link to='/'>Dashboard</Link>
-              {' '}
-              <Link to='/posts/new'>Add Post</Link>
-              {' '}
-              <Link to='/posts'>Explore</Link>
-              {' '}
-              <Link to='/sign-in' onClick={handleLogOut}>Sign Out</Link>
-            </li>
-          </>
-        ) : (
-          <>
-            <li>
-              <Link to='/'>Home</Link>
-              {' '}
-              <Link to='/sign-up'>Sign Up</Link>
-              {' '}
-              <Link to='/sign-in'>Sign In</Link>
-            </li>
-          </>
-        )}
-      </ul>
-    </nav>
-  )
-}
-=======
     localStorage.removeItem("token");
     setUser(null);
   };
->>>>>>> ed6ba5f968eb09b77270fac97348bc61843209af
 
   return (
     <div className="navbar bg-brand-primaryp text-white px-4 md:px-8 shadow-lg">
