@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link } from "react-router";
 import { useState, useEffect, useContext } from "react";
 import * as postService from "../../services/postService";
 import { UserContext } from "../../contexts/UserContext";

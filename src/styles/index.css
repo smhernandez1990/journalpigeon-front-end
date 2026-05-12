@@ -1,0 +1,55 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+@theme {
+  --color-primary: var(--color-brand-primaryp);
+  --color-primary-content: #ffffff;
+  
+  --color-secondary: var(--color-brand-mutedp);
+  --color-secondary-content: #ffffff;
+  
+  --color-neutral: var(--color-text);
+  --color-base-100: var(--color-bg);
+
+  /* Brand Palette */
+  --color-brand-lightp: #97dffc;   
+  --color-brand-mutedp: #858ae3;   
+  --color-brand-primaryp: #613dc1; 
+  --color-brand-darkp: #4e148c;    
+
+  /* Brand Content Colors */
+  --color-brand-primaryp-content: #ffffff;
+  --color-brand-mutedp-content: #ffffff;
+  --color-brand-darkp-content: #ffffff;
+
+  /* Neutral Palette */
+  --color-text: #6b6375;          
+  --color-text-h: #08060d;        
+  --color-bg: #ffffff;            
+  --color-border: #e5e4e7;        
+  --color-accent: #aa3bff;        
+
+  /* Typography */
+  --font-sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, Consolas, monospace;
+}
+
+@layer base {
+  html, 
+  body, 
+  #root {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    min-height: 100vh;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--color-text-h);
+    font-family: var(--font-heading);
+  }
+}

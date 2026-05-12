@@ -64,14 +64,14 @@ const PostDetails = () => {
         <header>
           <h1>{post.title}</h1>
           <p>
-            {post.author.username} posted on{" "}
+            {post.author?.username} posted on{" "}
             {new Date(post.createdAt).toLocaleDateString()}
           </p>
         </header>
         <p>{post.body}</p>
-        {post.tags.length > 0 && (
+        {post.tags?.length > 0 && (
           <ul className="showPostTags">
-            Tagged:
+            Tagged:{" "}
             {post.tags.map((t) => (
               <li key={t}>
                 <Link to={`/posts/tagged/${t}`}>{t}</Link>
@@ -81,7 +81,7 @@ const PostDetails = () => {
         )}
       </section>
 
-      {post.author._id === user._id && (
+      {post.author?._id === user?._id && (
         <>
           <Link to={`/posts/${postId}/edit`}>
             <button>Edit Post</button>
@@ -92,15 +92,16 @@ const PostDetails = () => {
 
       <section>
         <h3>Comments</h3>
-        {!post.comments.length && <p>No Comments Yet!</p>}
-        {post.comments.map((c) => (
+        {!post.comments?.length && <p>No Comments Yet!</p>}
+        {post.comments?.map((c) => (
           <article key={c._id}>
             <p>{c.body}</p>
             <p>
-              {c.author.username} {new Date(c.createdAt).toLocaleDateString()}
+              {c.author?.username} {new Date(c.createdAt).toLocaleDateString()}
             </p>
-            {c.author._id === user._id && <button>Edit Comment</button>}
-            {(c.author._id === user._id || post.author._id === user._id) && (
+            {c.author?._id === user?._id && <button>Edit Comment</button>}
+            {(c.author?._id === user?._id ||
+              post.author?._id === user?._id) && (
               <button onClick={() => handleDeleteComment(c._id)}>
                 Delete Comment
               </button>
