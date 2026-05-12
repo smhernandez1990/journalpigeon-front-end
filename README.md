@@ -13,7 +13,7 @@ JournalPigeon is a modern "home loft" for our digital thoughts. We were inspired
 ## Getting Started
 
 ### Planning Materials:
-[Trello board]()
+[Trello board](https://trello.com/b/rClPbQiG/blog-community-outline)
 
 [Deployed Application]()
 
