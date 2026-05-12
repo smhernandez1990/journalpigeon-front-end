@@ -14,16 +14,33 @@ const CommentForm = (props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="body">Add a Comment:</label>
+    <form
+      onSubmit={handleSubmit}
+      className="card bg-brand-mutedp text-white shadow-md p-6 mt-8"
+    >
+      <label
+        htmlFor="body"
+        className="block text-sm font-semibold uppercase tracking-widest mb-2"
+      >
+        Add a Comment:
+      </label>
       <textarea
         required
         name="body"
         id="body"
         value={commentFormData.body}
         onChange={handleChange}
+        className="textarea textarea-bordered bg-white text-brand-darkp w-full focus:outline-brand-lightp"
+        placeholder="Type your message..."
       />
-      <button type="submit">Submit Comment</button>
+      <div className="card-actions justify-end mt-4">
+        <button
+          type="submit"
+          className="btn bg-brand-lightp text-brand-darkp border-none hover:bg-white transition-colors"
+        >
+          Submit Comment
+        </button>
+      </div>
     </form>
   );
 };
