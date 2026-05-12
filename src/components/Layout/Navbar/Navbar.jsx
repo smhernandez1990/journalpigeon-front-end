@@ -11,13 +11,13 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar bg-brand-primaryp text-white px-4 md:px-8 shadow-lg">
+    <div className="navbar bg-brand-mutedp text-white px-4 md:px-8 shadow-lg">
       <div className="flex-1">
         <Link
           to="/"
           className="text-xl font-black tracking-tighter hover:text-brand-lightp transition-colors"
         >
-          FLOCK
+          JOURNAL PIGEON
         </Link>
       </div>
 
@@ -26,29 +26,41 @@ const Navbar = () => {
           {user ? (
             <>
               <li>
-                <Link to="/" className="hover:bg-brand-darkp">
+                <Link
+                  to="/"
+                  className="hover:bg-brand-lightp hover:text-brand-darkp"
+                >
                   Dashboard
                 </Link>
               </li>
               <li>
-                <Link to="/posts" className="hover:bg-brand-darkp">
+                <Link
+                  to="/posts"
+                  className="hover:bg-brand-lightp hover:text-brand-darkp"
+                >
                   Explore
                 </Link>
               </li>
               <li>
-                <Link to="/posts/new" className="hover:bg-brand-darkp">
+                <Link
+                  to="/posts/new"
+                  className="hover:bg-brand-lightp hover:text-brand-darkp"
+                >
                   Add Post
                 </Link>
               </li>
-              <div className="divider divider-horizontal border-white/20 mx-0"></div>
+              <div className="divider divider-horizontal bg-white/20 mx-0 w-[1px]"></div>
               <li className="flex flex-row items-center gap-2">
-                <span className="text-brand-lightp hidden sm:inline">
-                  @{user.username}
-                </span>
                 <Link
-                  to="/sign-in"
+                  to={`/posts/user/${user.username}`}
+                  className="text-brand-lightp hidden sm:inline hover:underline underline-offset-4"
+                >
+                  @{user.username}
+                </Link>
+                <Link
+                  to="/"
                   onClick={handleLogOut}
-                  className="btn btn-sm btn-ghost bg-brand-darkp hover:bg-white hover:text-brand-darkp border-none"
+                  className="btn btn-sm btn-ghost bg-brand-lightp text-brand-darkp hover:bg-white hover:text-brand-darkp border-none"
                 >
                   Sign Out
                 </Link>
@@ -57,12 +69,18 @@ const Navbar = () => {
           ) : (
             <>
               <li>
-                <Link to="/" className="hover:bg-brand-darkp">
+                <Link
+                  to="/"
+                  className="hover:bg-brand-lightp hover:text-brand-darkp"
+                >
                   Home
                 </Link>
               </li>
               <li>
-                <Link to="/sign-up" className="hover:bg-brand-darkp">
+                <Link
+                  to="/sign-up"
+                  className="hover:bg-brand-lightp hover:text-brand-darkp"
+                >
                   Sign Up
                 </Link>
               </li>

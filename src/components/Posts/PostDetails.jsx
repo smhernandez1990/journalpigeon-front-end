@@ -13,26 +13,27 @@ const PostDetails = () => {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-
-
   const handleDeletePost = async (postId) => {
     try {
       await postService.deletePost(postId);
       navigate(`/posts/user/${user.username}`);
     } catch (error) {
-      errNotify()
+      errNotify();
     }
   };
 
   const handleAddComment = async (commentFormData) => {
     try {
-      const newComment = await commentService.createComment(postId, commentFormData);
+      const newComment = await commentService.createComment(
+        postId,
+        commentFormData,
+      );
       setPost({
         ...post,
         comments: [...post.comments, newComment],
       });
     } catch (error) {
-      errNotify()
+      errNotify();
     }
   };
 
@@ -44,7 +45,7 @@ const PostDetails = () => {
         comments: post.comments.filter((c) => c._id !== commentId),
       });
     } catch (error) {
-      errNotify()
+      errNotify();
     }
   };
 
@@ -54,66 +55,134 @@ const PostDetails = () => {
         const postData = await postService.show(postId);
         setPost(postData);
       } catch (error) {
-        errNotify()
+        errNotify();
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
     };
     fetchPost();
   }, [postId]);
 
-  if (isLoading) return <main>Loading...</main>;
-  if (!post) navigate('/error')
+  if (isLoading) {
+    return (
+      <main className="flex justify-center items-center min-h-[50vh]">
+        <span className="loading loading-spinner loading-lg text-brand-mutedp"></span>
+      </main>
+    );
+  }
+
+  if (!post) return null;
+
   return (
-    <main>
-      <section>
-        <header>
-          <h1>{post.title}</h1>
-          <h3>
-            <Link to={`/${post.author.username}`}>{post.author.username}</Link> posted on{" "}
-            {new Date(post.createdAt).toLocaleDateString()}
-          </h3>
-        </header>
-        <p>{post.body}</p>
-        {post.tags.length > 0 && (
-          <ul className="showPostTags">
-            Tagged:
-            {post.tags.map((t) => (
-              <li key={t}>
-                <Link to={`/posts/tagged/${t}`}>{t}</Link>
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
+    <main className="max-w-4xl mx-auto p-6 space-y-8">
+      <article className="card bg-brand-mutedp text-white shadow-xl">
+        <div className="card-body p-8">
+          <header className="mb-6">
+            <h1 className="text-4xl font-bold mb-2">{post.title}</h1>
+            <div className="flex items-center gap-2 text-brand-lightp font-medium">
+              <span>by</span>
+              <Link
+                to={`/posts/user/${post.author.username}`}
+                className="hover:underline"
+              >
+                @{post.author.username}
+              </Link>
+              <span className="text-white/60">•</span>
+              <span className="text-white/80">
+                {new Date(post.createdAt).toLocaleDateString()}
+              </span>
+            </div>
+          </header>
 
-      {post.author._id === user._id && (
-        <>
-          <Link to={`/posts/${postId}/edit`}>
-            <button>Edit Post</button>
-          </Link>
-          <button onClick={() => handleDeletePost(postId)}>Delete Post</button>
-        </>
-      )}
+          <p className="text-lg leading-relaxed mb-8">{post.body}</p>
 
-      <section>
-        <h3>Comments</h3>
-        {!post.comments.length && <p>No Comments Yet!</p>}
-        {post.comments.map((c) => (
-          <article key={c._id}>
-            <p>{c.body}</p>
-            <p>
-              {c.author.username} {new Date(c.createdAt).toLocaleDateString()}
-            </p>
-            {c.author._id === user._id && <button>Edit Comment</button>}
-            {(c.author._id === user._id || post.author._id === user._id) && (
-              <button onClick={() => handleDeleteComment(c._id)}>
-                Delete Comment
+          {post.tags.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-6">
+              {post.tags.map((t) => (
+                <Link
+                  key={t}
+                  to={`/posts/tagged/${t}`}
+                  className="badge bg-brand-lightp text-brand-darkp border-none p-3 font-semibold hover:bg-white transition-colors"
+                >
+                  #{t}
+                </Link>
+              ))}
+            </div>
+          )}
+
+          {post.author._id === user._id && (
+            <div className="card-actions justify-end border-t border-white/20 pt-4 gap-2">
+              <Link
+                to={`/posts/${postId}/edit`}
+                className="btn btn-sm bg-brand-lightp text-brand-darkp border-none hover:bg-white"
+              >
+                Edit Post
+              </Link>
+              <button
+                onClick={() => handleDeletePost(postId)}
+                className="btn btn-sm btn-outline text-white hover:bg-red-500 hover:border-red-500"
+              >
+                Delete Post
               </button>
-            )}
-          </article>
-        ))}
-        <CommentForm handleAddComment={handleAddComment} />
+            </div>
+          )}
+        </div>
+      </article>
+
+      <section className="space-y-6">
+        <h3 className="text-2xl font-bold text-brand-darkp">Comments</h3>
+
+        <div className="space-y-4">
+          {!post.comments.length && (
+            <p className="text-text italic py-4">
+              No comments yet. Be the first to chirp!
+            </p>
+          )}
+          {post.comments.map((c) => (
+            <article
+              key={c._id}
+              className="card bg-brand-mutedp text-white shadow-md"
+            >
+              <div className="card-body p-5">
+                <header className="flex justify-between items-center mb-3">
+                  <div className="flex items-center gap-2">
+                    <div className="avatar placeholder">
+                      <div className="bg-brand-lightp text-brand-darkp w-8 rounded-full">
+                        <span className="text-xs font-bold">
+                          {c.author.username.charAt(0).toUpperCase()}
+                        </span>
+                      </div>
+                    </div>
+                    <strong className="font-semibold">
+                      @{c.author.username}
+                    </strong>
+                  </div>
+                  <span className="text-xs opacity-70">
+                    {new Date(c.createdAt).toLocaleDateString()}
+                  </span>
+                </header>
+
+                <p className="text-sm leading-relaxed">{c.body}</p>
+
+                {(c.author._id === user._id ||
+                  post.author._id === user._id) && (
+                  <div className="card-actions justify-end mt-2">
+                    <button
+                      onClick={() => handleDeleteComment(c._id)}
+                      className="btn btn-xs btn-ghost text-red-300 hover:bg-red-500 hover:text-white"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div className="pt-4">
+          <CommentForm handleAddComment={handleAddComment} />
+        </div>
       </section>
     </main>
   );
