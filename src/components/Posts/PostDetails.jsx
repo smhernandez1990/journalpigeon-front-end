@@ -57,7 +57,7 @@ const PostDetails = () => {
   };
 
   if (!post) return <main>Loading...</main>;
-
+  if (!post._id) return <main>Post Not Found</main>;
   return (
     <main>
       <section>

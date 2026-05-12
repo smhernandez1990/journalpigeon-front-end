@@ -28,12 +28,15 @@ export const show = async (postId) => {
             }
         })
         const data = await response.json()
+        console.log(data);
+        
         if(data.err){
             throw new Error(data.err)
         }
         return data
     } catch (error) {
         console.log(error);
+        return {}
     }
 }
 

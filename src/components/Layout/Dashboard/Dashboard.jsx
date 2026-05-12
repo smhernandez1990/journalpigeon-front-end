@@ -27,6 +27,7 @@ const Dashboard = () => {
         <section>
         <h1>Welcome Back, {user.username}</h1>
         <h2>Your Latest Posts</h2>
+            {filteredUserPosts.length === 0 && <p><button onClick={() => navigate('/posts/new')}>Make Your First Post!</button></p>}
             {filteredUserPosts.slice(0, myLoadedPosts).map((p) => (
                 <article key={p._id}>
                     <p>

@@ -5,8 +5,8 @@ export const signUp = async (formData) => {
         const response = await fetch(`${BASE_URL}/sign-up`, {
             method: 'POST',
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('token')}`
             },
             body: JSON.stringify(formData)
         })
@@ -19,10 +19,8 @@ export const signUp = async (formData) => {
 
         if(data.token) {
             localStorage.setItem('token', data.token)
-            //return the decoded payload from the token aka username and _id
             return JSON.parse(atob(data.token.split('.')[1])).user
         }
-        
     } catch (error) {
         console.log(error);
     }
@@ -33,8 +31,8 @@ export const signIn = async (formData) => {
         const response = await fetch(`${BASE_URL}/sign-in`, {
             method: 'POST',
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('token')}`
             },
             body: JSON.stringify(formData)
         })
@@ -47,7 +45,6 @@ export const signIn = async (formData) => {
 
         if (data.token) {
             localStorage.setItem('token', data.token)
-            //return the decoded payload from the token aka username and _id
             return JSON.parse(atob(data.token.split('.')[1])).user
         }
 

@@ -11,6 +11,7 @@ import ExplorePage from "./components/Layout/ExplorePage/ExplorePage";
 import PostDetails from "./components/Posts/PostDetails";
 import PostList from "./components/Posts/PostList";
 import Footer from "./components/Layout/Footer/Footer";
+import ErrorPage from "./components/Layout/ErrorPage/ErrorPage";
 
 const App = () => {
   const { user } = useContext(UserContext);
@@ -35,6 +36,7 @@ const App = () => {
             <Route path="/sign-in" element={<SignInForm />} />
           </>
         )}
+          <Route path='*' element={<ErrorPage />} />
       </Routes>
       <Footer />
     </div>
