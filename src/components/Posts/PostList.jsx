@@ -2,6 +2,7 @@ import { useParams, Link } from "react-router";
 import { useState, useEffect, useContext } from "react";
 import * as postService from "../../services/postService";
 import { UserContext } from "../../contexts/UserContext";
+import { errNotify } from "../ErrorNotification/ErrorNotification";
 
 const PostList = ({ type }) => {
   const { user } = useContext(UserContext);
@@ -14,8 +15,8 @@ const PostList = ({ type }) => {
       try {
         const postsData = await postService.index();
         setAllPosts(postsData);
-      } catch (err) {
-        console.error(err);
+      } catch (error) {
+        errNotify()
       } finally {
         setIsLoading(false);
       }
@@ -37,11 +38,6 @@ const PostList = ({ type }) => {
           ? `${username}'s Posts`
           : `Posts Tagged '${tag}'`}
       </h1>
-
-      <Link to="/explore">
-        <button>← Back to Explore</button>
-      </Link>
-
       <section>
         {filteredPosts.map((p) => (
           <article key={p._id}>

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router'
 import { signUp } from '../../../services/authService'
 import { UserContext } from '../../../contexts/UserContext'
 
-const SignUpForm = () => {
+const SignUpForm = ({ toast }) => {
     const [formData, setFormData] = useState({
         username: '',
         password: '',
@@ -29,8 +29,9 @@ const SignUpForm = () => {
         try {
             const user = await signUp(formData)
             setUser(user)
+            navigate('/')
         } catch (error) {
-            console.log(error)
+            toast.error('Error: ', error.message)
         }
     }
 

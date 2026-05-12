@@ -1,10 +1,10 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router";
 import { signIn } from "../../../services/authService";
-// authService.signUp(formData)
 import { UserContext } from "../../../contexts/UserContext";
 
-const SignInForm = () => {
+
+const SignInForm = ({ toast }) => {
     const [formData, setFormData] = useState({
         username: "",
         password: "",
@@ -26,8 +26,7 @@ const SignInForm = () => {
             setUser(user)
             navigate('/')
         } catch (error) {
-            setMessage(error.message)
-            throw new Error(error.message, { cause: error })
+            toast.error('Error: ', error.message)
         }
     };
 

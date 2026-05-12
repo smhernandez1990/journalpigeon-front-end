@@ -17,11 +17,30 @@ const ExplorePage = () => {
 
   if (!posts) {
     return (
+<<<<<<< HEAD
+        <>
+        <h1>Flock Talk</h1>
+            {posts.map((p) => (
+                <article key={p._id}>
+                    <p>
+                        <Link to={`/posts/${p._id}`}>
+                            <strong>{p.title}</strong>
+                        </Link>
+                        {' '} by {' '}
+                        <Link to={`/${p.author.username}`}>{p.author.username}</Link>
+                    </p>
+                </article>
+            ))}
+        </>
+    )
+}
+=======
       <main className="flex justify-center items-center min-h-[50vh]">
         <span className="loading loading-spinner loading-lg text-primary"></span>
       </main>
     );
   }
+>>>>>>> ed6ba5f968eb09b77270fac97348bc61843209af
 
   return (
     <main className="max-w-4xl mx-auto p-6">

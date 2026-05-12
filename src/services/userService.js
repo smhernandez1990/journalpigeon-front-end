@@ -14,8 +14,7 @@ export const index = async () => {
         }
         return data
     } catch (error) {
-        console.log(error);
-        
+        throw new Error(error.message, {cause: error})
     }
 }
 
@@ -32,6 +31,6 @@ export const show = async (userId) => {
         }
         return data
     } catch (error) {
-        console.log(error);
+        throw new Error(error.message, { cause: error })
     }
 }

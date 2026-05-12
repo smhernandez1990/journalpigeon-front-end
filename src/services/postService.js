@@ -16,7 +16,7 @@ export const index = async () => {
         
         return data
     } catch (error) {
-        console.log(error)
+        throw new Error(error.message, { cause: error })
     }
 }
 
@@ -28,12 +28,13 @@ export const show = async (postId) => {
             }
         })
         const data = await response.json()
+        
         if(data.err){
             throw new Error(data.err)
         }
         return data
     } catch (error) {
-        console.log(error);
+        throw new Error(error.message, { cause: error })
     }
 }
 
@@ -53,7 +54,7 @@ export const create = async (formData) => {
         }
         return data
     } catch (error) {
-        console.log(error);
+        throw new Error(error.message, { cause: error })
     }
 }
 
@@ -73,8 +74,7 @@ export const update = async (postId, postFormData) => {
         }
         return data
     } catch (error) {
-        console.log(error);
-        
+        throw new Error(error.message, { cause: error })
     }
 }
 
@@ -90,7 +90,6 @@ export const deletePost = async (postId) => {
         if(data.err) throw new Error(data.err)
         return data
     } catch (error) {
-        console.log(error);
-        
+        throw new Error(error.message, { cause: error })
     }
 }
