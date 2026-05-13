@@ -3,12 +3,12 @@ import { Link } from "react-router";
 const Landing = () => {
   return (
     <main className="max-w-4xl mx-auto p-6 flex flex-col items-center text-center min-h-screen">
-      <div className="card bg-base-100 shadow-xl overflow-hidden border border-border mb-8">
-        <figure>
+      <div className="card bg-base-100 shadow-xl overflow-hidden border border-border mb-8 w-full h-100">
+        <figure className="w-full h-full">
           <img
-            src="someimageurl"
+            src="https://i.imgur.com/8VvGD3m.png"
             alt="JournalPigeon Explore Page"
-            className="w-full h-auto"
+            className="w-full h-full object-cover object-top"
           />
         </figure>
       </div>

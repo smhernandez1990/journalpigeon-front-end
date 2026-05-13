@@ -8,21 +8,12 @@ JournalPigeon is a social journaling blog, where users can share their daily tho
 
 JournalPigeon is a modern "home loft" for our digital thoughts. We were inspired by the historical role of carrier pigeons as the world's most reliable messengers, this platform turns journaling into a social experience. Here you can share your daily "coos" (posts) and mood and share vital news with your flock or just checking in. You can also explore and add to your flock or join other flocks as well!
 
-<!-- > Add a fun fact -->
-
 ## Getting Started
 
 ### Planning Materials:
 [Trello board](https://trello.com/b/rClPbQiG/blog-community-outline)
 
 [Deployed Application]()
-
-## Attributions
-
-[]()
-[]()
-
-[Coolors for Color Scheme for Blog](https://coolors.co/)
 
 ## Technologies Used
 
@@ -32,6 +23,8 @@ JournalPigeon is a modern "home loft" for our digital thoughts. We were inspired
 * React(Vite)
 * React Router
 * Context API
+* Tailwind CSS
+* daisyUI
 
 ## Next Steps
 
@@ -40,3 +33,4 @@ JournalPigeon is a modern "home loft" for our digital thoughts. We were inspired
 3. Media Support: Add image hosting (e.g., Cloudinary) to allow photos in journal entries.
 4. Enhanced Profiles: Add customizable user avatars and profile bios.
 5. Custom Themes: Allow users to personalize the look and feel of their individual blog pages.
+6. More To Explore: An activity feed place in the user dashboard showing the latest comments, posts and tags used from users across the platform
