@@ -14,7 +14,7 @@ JournalPigeon is a modern "home loft" for our digital thoughts. We were inspired
 [Trello board](https://trello.com/b/rClPbQiG/blog-community-outline)
 
 [Deployed Application Front-End](https://journal-pigeon.netlify.app)
-[Deployed Appliation Back-End](https://journal-pigeon-0a4e0a09b299.herokuapp.com)
+[Deployed Application Back-End](https://journal-pigeon-0a4e0a09b299.herokuapp.com)
 
 ## Technologies Used
 

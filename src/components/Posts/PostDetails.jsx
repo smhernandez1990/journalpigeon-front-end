@@ -71,7 +71,7 @@ const PostDetails = () => {
     );
   }
 
-  if (!post) navigate('/error')
+  if (!post) navigate('error')
 
   return (
     <main className="max-w-4xl mx-auto p-6 space-y-8">
