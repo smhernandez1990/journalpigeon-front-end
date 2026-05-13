@@ -1,6 +1,6 @@
 # JournalPigeon
 
-![JournalPigeon Explore Page]()
+![JournalPigeon Explore Page](https://i.imgur.com/Z1XkdYT.png)
 
 JournalPigeon is a social journaling blog, where users can share their daily thoughts, track their moods, and connect with a "flock" of other users through tags and comments.
 
