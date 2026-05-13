@@ -53,15 +53,20 @@ const PostDetails = () => {
     const fetchPost = async () => {
       try {
         const postData = await postService.show(postId);
+        if(!postData || postData.error) {
+          navigate("/error", { state: { message: "Post not found." }});
+          return;
+        }
         setPost(postData);
       } catch (error) {
         errNotify(error);
+        navigate("/error", { state: {message: error.message || "Server error occurred."}});
       } finally {
         setIsLoading(false);
       }
     };
     fetchPost();
-  }, [postId]);
+  }, [postId, navigate]);
 
   if (isLoading) {
     return (
@@ -71,7 +76,9 @@ const PostDetails = () => {
     );
   }
 
-  if (!post) navigate('error')
+  if (!post) {
+    return null;
+  }
 
   return (
     <main className="max-w-4xl mx-auto p-6 space-y-8">
@@ -82,10 +89,10 @@ const PostDetails = () => {
             <div className="flex items-center gap-2 text-brand-lightp font-medium">
               <span>by</span>
               <Link
-                to={`/posts/user/${post.author.username}`}
+                to={`/posts/user/${post.author?.username}`}
                 className="hover:underline"
               >
-                @{post.author.username}
+                @{post.author?.username}
               </Link>
               <span className="text-white/60">•</span>
               <span className="text-white/80">
@@ -110,7 +117,7 @@ const PostDetails = () => {
             </div>
           )}
 
-          {post.author._id === user._id && (
+          {post.author?._id === user?._id && (
             <div className="card-actions justify-end border-t border-white/20 pt-4 gap-2">
               <Link
                 to={`/posts/${postId}/edit`}
@@ -149,12 +156,12 @@ const PostDetails = () => {
                     <div className="avatar placeholder">
                       <div className="bg-brand-lightp text-brand-darkp w-8 rounded-full">
                         <span className="text-xs font-bold">
-                          {c.author.username.charAt(0).toUpperCase()}
+                          {c.author?.username?.charAt(0).toUpperCase()}
                         </span>
                       </div>
                     </div>
                     <strong className="font-semibold">
-                      @{c.author.username}
+                      @{c.author.username || "Anonymous"}
                     </strong>
                   </div>
                   <span className="text-xs opacity-70">
@@ -164,8 +171,8 @@ const PostDetails = () => {
 
                 <p className="text-sm leading-relaxed">{c.body}</p>
 
-                {(c.author._id === user._id ||
-                  post.author._id === user._id) && (
+                {(c.author?._id === user?._id ||
+                  post.author?._id === user?._id) && (
                   <div className="card-actions justify-end mt-2">
                     <button
                       onClick={() => handleDeleteComment(c._id)}
