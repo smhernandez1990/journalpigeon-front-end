@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router";
 import * as postService from "../../services/postService";
+import { UserContext } from "../../contexts/UserContext";
 import { errNotify } from "../ErrorNotification/ErrorNotification";
 
 const initState = {
@@ -13,6 +14,7 @@ const initState = {
 const PostForm = () => {
   const { postId } = useParams();
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
   const [tagVals, setTagVals] = useState("");
   const [formData, setFormData] = useState(initState);
 
@@ -28,7 +30,7 @@ const PostForm = () => {
         });
         setTagVals(postData.tags ? postData.tags.join(", ") : "");
       } catch (error) {
-        errNotify()
+        errNotify(error);
       }
     };
     if (postId) fetchPost();
@@ -51,53 +53,98 @@ const PostForm = () => {
     try {
       if (postId) {
         await postService.update(postId, postData);
-        navigate(`/posts/${postId}`);
       } else {
-        const newPost = await postService.create(postData);
-        navigate(`/posts/${newPost._id}`);
+        await postService.create(postData);
       }
+      navigate(`/posts/user/${user.username}`);
     } catch (error) {
-      errNotify()
+      errNotify(error);
     }
   };
 
   return (
-    <main>
-      <h1>{postId ? "Edit Post" : "New Post"}</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="title">Title</label>
-        <input
-          id="title"
-          name="title"
-          value={formData.title}
-          onChange={handleChange}
-          required
-        />
-        <label htmlFor="mood">Mood</label>
-        <input
-          id="mood"
-          name="mood"
-          value={formData.mood}
-          onChange={handleChange}
-        />
-        <label htmlFor="body">Body</label>
-        <textarea
-          id="body"
-          name="body"
-          value={formData.body}
-          onChange={handleChange}
-          required
-        />
-        <label htmlFor="tags">Tags</label>
-        <input
-          id="tags"
-          name="tags"
-          value={tagVals}
-          onChange={(e) => setTagVals(e.target.value)}
-          placeholder="coding, react, help"
-        />
-        <button type="submit">{postId ? "Update Post" : "Create Post"}</button>
-      </form>
+    <main className="max-w-2xl mx-auto px-6 py-10 min-h-screen">
+      <div className="card bg-brand-mutedp shadow-xl p-8 rounded-3xl text-white">
+        <header className="mb-8 text-center">
+          <h1 className="text-4xl font-bold mb-2">
+            {postId ? "Edit Post" : "New Post"}
+          </h1>
+          <div className="h-1.5 w-12 bg-brand-lightp rounded-full mx-auto"></div>
+        </header>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="form-control">
+            <label className="label" htmlFor="title">
+              <span className="label-text font-bold text-white">Title</span>
+            </label>
+            <input
+              id="title"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              className="input input-bordered w-full bg-white text-black focus:outline-brand-lightp"
+              required
+            />
+          </div>
+
+          <div className="form-control">
+            <label className="label" htmlFor="mood">
+              <span className="label-text font-bold text-white">Mood</span>
+            </label>
+            <input
+              id="mood"
+              name="mood"
+              value={formData.mood}
+              onChange={handleChange}
+              className="input input-bordered w-full bg-white text-black focus:outline-brand-lightp"
+            />
+          </div>
+
+          <div className="form-control">
+            <label className="label" htmlFor="body">
+              <span className="label-text font-bold text-white">Body</span>
+            </label>
+            <textarea
+              id="body"
+              name="body"
+              value={formData.body}
+              onChange={handleChange}
+              className="textarea textarea-bordered h-40 bg-white text-black focus:outline-brand-lightp"
+              required
+            />
+          </div>
+
+          <div className="form-control">
+            <label className="label" htmlFor="tags">
+              <span className="label-text font-bold text-white">Tags</span>
+            </label>
+            <input
+              id="tags"
+              name="tags"
+              value={tagVals}
+              onChange={(e) => setTagVals(e.target.value)}
+              className="input input-bordered w-full bg-white text-black focus:outline-brand-lightp"
+              placeholder="coding, react, help"
+            />
+          </div>
+
+          <div className="pt-4 flex flex-col gap-3">
+            <button
+              type="submit"
+              className="btn bg-brand-lightp text-brand-darkp border-none font-bold hover:bg-white transition-colors"
+            >
+              {postId ? "Update Post" : "Create Post"}
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate(-1)}
+              className="btn btn-ghost text-white hover:bg-brand-lightp/20"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
     </main>
   );
 };
