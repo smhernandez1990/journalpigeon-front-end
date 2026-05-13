@@ -16,7 +16,7 @@ const PostList = ({ type }) => {
         const postsData = await postService.index();
         setAllPosts(postsData || []);
       } catch (error) {
-        errNotify();
+        errNotify(error)
       } finally {
         setIsLoading(false);
       }

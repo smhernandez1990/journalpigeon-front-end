@@ -80,15 +80,12 @@ export const update = async (postId, postFormData) => {
 
 export const deletePost = async (postId) => {
     try {
-        const response = await fetch(`${BASE_URL}/${postId}`, {
+        await fetch(`${BASE_URL}/${postId}`, {
             method: 'DELETE',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
         })
-        const data = await response.json()
-        if(data.err) throw new Error(data.err)
-        return data
     } catch (error) {
         throw new Error(error.message, { cause: error })
     }

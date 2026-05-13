@@ -30,7 +30,7 @@ const PostForm = () => {
         });
         setTagVals(postData.tags ? postData.tags.join(", ") : "");
       } catch (error) {
-        errNotify();
+        errNotify(error);
       }
     };
     if (postId) fetchPost();
@@ -58,7 +58,7 @@ const PostForm = () => {
       }
       navigate(`/posts/user/${user.username}`);
     } catch (error) {
-      errNotify();
+      errNotify(error);
     }
   };
 

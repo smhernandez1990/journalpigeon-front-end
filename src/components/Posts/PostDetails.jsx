@@ -18,7 +18,7 @@ const PostDetails = () => {
       await postService.deletePost(postId);
       navigate(`/posts/user/${user.username}`);
     } catch (error) {
-      errNotify();
+      errNotify(error);
     }
   };
 
@@ -33,7 +33,7 @@ const PostDetails = () => {
         comments: [...post.comments, newComment],
       });
     } catch (error) {
-      errNotify();
+      errNotify(error);
     }
   };
 
@@ -45,7 +45,7 @@ const PostDetails = () => {
         comments: post.comments.filter((c) => c._id !== commentId),
       });
     } catch (error) {
-      errNotify();
+      errNotify(error);
     }
   };
 
@@ -55,7 +55,7 @@ const PostDetails = () => {
         const postData = await postService.show(postId);
         setPost(postData);
       } catch (error) {
-        errNotify();
+        errNotify(error);
       } finally {
         setIsLoading(false);
       }
@@ -71,7 +71,7 @@ const PostDetails = () => {
     );
   }
 
-  if (!post) return null;
+  if (!post) navigate('/error')
 
   return (
     <main className="max-w-4xl mx-auto p-6 space-y-8">
