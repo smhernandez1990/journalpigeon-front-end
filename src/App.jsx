@@ -30,11 +30,11 @@ const App = () => {
         <Route path="/" element={user ? <Dashboard /> : <Landing />} />
         {user ? (
           <>
-            <Route path='/posts' element={<ExplorePage />} /> //explore shows all posts from all users from newest to oldest
+            <Route path='/posts' element={<ExplorePage />} />
             <Route path='/posts/new' element={<PostForm />} />
             <Route path='/posts/:postId' element={<PostDetails />} />
             <Route path='/posts/:postId/edit' element={<PostForm />} />
-            <Route path='//posts/user/:username' element={<PostList type='selectedUser' />} />
+            <Route path='/posts/user/:username' element={<PostList type='selectedUser' />} />
             <Route path='/posts/tagged/:tag' element={<PostList type='tagged' />} />
           </>
         ) : (
