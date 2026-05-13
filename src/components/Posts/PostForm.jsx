@@ -109,7 +109,7 @@ const PostForm = () => {
               name="body"
               value={formData.body}
               onChange={handleChange}
-              className="textarea textarea-bordered h-40 bg-white text-black focus:outline-brand-lightp"
+              className="input input-bordered w-full h-64 py-3 bg-white text-black focus:outline-brand-lightp resize-none"
               required
             />
           </div>
